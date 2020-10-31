@@ -20,7 +20,12 @@ namespace Solution
             {
                 if (int.TryParse(line, out var result))
                 {
-                    fuel += result / 3 - 2;
+                    int fuelPartial;
+                    while ((fuelPartial = result / 3 - 2) > 0)
+                    {
+                        result = fuelPartial;
+                        fuel += fuelPartial; 
+                    }
                 }
             }
 

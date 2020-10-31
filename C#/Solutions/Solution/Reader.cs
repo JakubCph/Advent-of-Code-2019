@@ -5,10 +5,6 @@ namespace Solution
 {
     public class Reader
     {
-        public static object ReadLines(string v)
-        {
-            throw new NotImplementedException();
-        }
         public static StreamReader OpenStream(string argPath)
         {
             StreamReader file;
