@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace Solution
 {
-    class Program
+    class Solution
     {
         private const string Path = "Input.txt";
 
