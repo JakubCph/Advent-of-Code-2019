@@ -1,0 +1,9 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/C#/Solutions/Solution/obj
+/C#/Solutions/Solution/bin/Debug/netcoreapp3.1
+/C#/Solutions/.vs/Solutions/DesignTimeBuild
+/C#/Solutions/.vs/Solutions/v16/TestStore/0
+/C#/Solutions/.vs/Solutions/v16/.suo
