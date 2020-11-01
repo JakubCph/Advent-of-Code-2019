@@ -12,19 +12,19 @@ namespace Day2
 
         public static int[] Process(int[] opcode)
         {
-            int current = 0;
-            while(current < opcode.Length && opcode[current] != Stop)
+            int instructionPointer = 0;
+            while(instructionPointer < opcode.Length && opcode[instructionPointer] != Stop)
             {
-                if(opcode[current] == Add)
+                if(opcode[instructionPointer] == Add)
                 {
-                    executeAdd(opcode, current);
+                    executeAdd(opcode, instructionPointer);
                 }
-                if(opcode[current] == Multiply)
+                if(opcode[instructionPointer] == Multiply)
                 {
-                    executeMultiply(opcode,current);
+                    executeMultiply(opcode,instructionPointer);
                 }
 
-                current += Step;
+                instructionPointer += Step;
             }
 
             return opcode;
@@ -39,8 +39,6 @@ namespace Day2
             var a = opcode[opcode[current + 1]];
             var b = opcode[opcode[current + 2]];
             opcode[opcode[current + 3]] = a * b;
-
-            Console.WriteLine("Adding...");
         }
 
         /// <summary>
@@ -53,8 +51,6 @@ namespace Day2
             var a = opcode[opcode[current + 1]];
             var b = opcode[opcode[current + 2]];
             opcode[opcode[current + 3]] = a + b;
-
-            Console.WriteLine("Multiplying...");
         }
     }
 }
