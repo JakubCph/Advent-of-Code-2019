@@ -15,5 +15,7 @@ namespace Day3
 
         public int X { get; }
         public int Y { get; }
+
+        public static PointsComparer Comparer { get; } = new PointsComparer();
     }
 }

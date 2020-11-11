@@ -39,5 +39,7 @@ namespace Day3
         public Point Beginning { get; }
         public Point End { get; }
 
+        public static SegmentsComparer Comparer { get; } = new SegmentsComparer();
+
     }
 }

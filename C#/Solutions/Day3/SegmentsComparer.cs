@@ -16,14 +16,13 @@ namespace Day3
             if (Object.ReferenceEquals(seg1, null) || Object.ReferenceEquals(seg2, null)) 
                 return false;
 
-            return seg1.Points.Intersect(seg2.Points, new PointsComparer()).ToList().Count() > 0 ? true : false;
+            return seg1.Points.Intersect(seg2.Points, Point.Comparer).ToList().Any() ? true : false;
 
         }
 
         public int GetHashCode([DisallowNull] Segment obj)
         {
-            return obj.Beginning.X.GetHashCode() ^ obj.Beginning.Y.GetHashCode() 
-                ^ obj.End.X.GetHashCode() ^ obj.End.Y.GetHashCode();
+            return obj.Points.GetHashCode() ^ obj.Points.GetHashCode();
         }
     }
 }
