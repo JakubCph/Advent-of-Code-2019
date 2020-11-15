@@ -17,9 +17,14 @@ namespace Day3
             return (x.X == y.X) && (x.Y == y.Y);
         }
 
+        /// <summary>
+        /// We use weighted hashcode to differentiate between (-1,0) and (0,-1). 
+        /// </summary>
         public int GetHashCode([DisallowNull] Point obj)
         {
-            return obj.X.GetHashCode() ^ obj.Y.GetHashCode();
+            Console.WriteLine($"Point ({obj.X} {obj.Y}) ,hash: {242483945 * obj.X.GetHashCode() ^ 347384738 * obj.Y.GetHashCode()}");
+            //return  242483945 * obj.X.GetHashCode() ^ 347384738 * obj.Y.GetHashCode();
+            return base.GetHashCode();
         }
     }
 }

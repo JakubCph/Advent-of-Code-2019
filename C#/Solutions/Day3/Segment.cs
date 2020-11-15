@@ -19,16 +19,30 @@ namespace Day3
 
         private void fillPoints()
         {
-            if(Beginning.X == End.X)
+            if(Beginning.X == End.X && Beginning.Y < End.Y)
             {
-                for (int y = Beginning.Y; y != End.Y; y += (End.Y-Beginning.Y) > 0 ? 1 : -1)
+                for (int y = Beginning.Y; y <= End.Y; y++)
                 {
                     Points.Add(new Point(Beginning.X, y));
                 }
             }
-            else
+            else if (Beginning.X == End.X && Beginning.Y > End.Y)
             {
-                for (int x = Beginning.X; x != End.X; x += (End.X - Beginning.X) > 0 ? 1 : -1)
+                for (int y = Beginning.Y; y >= End.Y; y--)
+                {
+                    Points.Add(new Point(Beginning.X, y));
+                }
+            }
+            else if (Beginning.X < End.X)
+            {
+                for (int x = Beginning.X; x <= End.X; x++)
+                {
+                    Points.Add(new Point(x, Beginning.Y));
+                }
+            }
+            else if (Beginning.X > End.X)
+            {
+                for (int x = Beginning.X; x >= End.X; x--)
                 {
                     Points.Add(new Point(x, Beginning.Y));
                 }

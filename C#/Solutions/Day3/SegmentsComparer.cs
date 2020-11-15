@@ -20,9 +20,15 @@ namespace Day3
 
         }
 
+        /// <summary>
+        /// Return always constant hashcode for any segment passed because at this
+        /// point we don't know if segments are equal. We need to compare their points.
+        /// To force the intersect method to check all combinations we return teh same hashcode.
+        /// </summary>
         public int GetHashCode([DisallowNull] Segment obj)
         {
-            return obj.Points.GetHashCode() ^ obj.Points.GetHashCode();
+            return base.GetHashCode();
+
         }
     }
 }
