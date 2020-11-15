@@ -22,9 +22,7 @@ namespace Day3
         /// </summary>
         public int GetHashCode([DisallowNull] Point obj)
         {
-            Console.WriteLine($"Point ({obj.X} {obj.Y}) ,hash: {242483945 * obj.X.GetHashCode() ^ 347384738 * obj.Y.GetHashCode()}");
-            //return  242483945 * obj.X.GetHashCode() ^ 347384738 * obj.Y.GetHashCode();
-            return base.GetHashCode();
+            return 242483945 * obj.X.GetHashCode() ^ 347384738 * obj.Y.GetHashCode();
         }
     }
 }

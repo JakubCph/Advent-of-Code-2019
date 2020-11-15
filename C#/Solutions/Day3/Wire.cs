@@ -13,14 +13,15 @@ namespace Day3
         private const char Down = 'D';
 
         private Point _currPos = new Point(0,0);
+        public HashSet<Point> Points { get; }
 
         public Wire(string[] directions)
         {
-            Segments = new HashSet<Segment>();
-            addSegments(directions);
+            Points = new HashSet<Point>();
+            addPoints(directions);
         }
 
-        private void addSegments(string[] directions)
+        private void addPoints(string[] directions)
         {
             char dir;
             int length;
@@ -33,27 +34,38 @@ namespace Day3
             }
         }
 
-        public HashSet<Segment> Segments { get; }
 
         private void addNextSegment(char dir, int length)
         {
             switch (dir)
             {
                 case Up:
-                    Segments.Add(new Segment(_currPos, new Point(_currPos.X, _currPos.Y+length)));
-                    updateCurrPos(0,length);
+                    for (int i = 0; i < length; i++)
+                    {
+                        updateCurrPos(0, 1);
+                        Points.Add(_currPos);
+                    }
                     break;
                 case Down:
-                    Segments.Add(new Segment(_currPos, new Point(_currPos.X, _currPos.Y - length)));
-                    updateCurrPos(0, -length);
+                    for (int i = 0; i < length; i++)
+                    {
+                        updateCurrPos(0, -1);
+                        Points.Add(_currPos);
+                    }
                     break;
                 case Left:
-                    Segments.Add(new Segment(_currPos, new Point(_currPos.X - length, _currPos.Y)));
-                    updateCurrPos(-length,0);
+                    for (int i = 0; i < length; i++)
+                    {
+                        updateCurrPos(-1,0);
+                        Points.Add(_currPos);
+                    }
                     break;
                 case Right:
-                    Segments.Add(new Segment(_currPos, new Point(_currPos.X + length, _currPos.Y)));
-                    updateCurrPos(length, 0);
+                    for (int i = 0; i < length; i++)
+                    {
+                        updateCurrPos(1, 0);
+                        Points.Add(_currPos);
+                    }
                     break;
                 default:
                     break;
