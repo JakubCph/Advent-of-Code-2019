@@ -19,7 +19,7 @@ namespace Day3
 
             var pointsWithDistances = Calculator.CalculateManhattanDistance(new Point(0,0) ,intersectingPoints).ToList();
             pointsWithDistances.Sort(new DistanceComparer());
-            var closestHit = pointsWithDistances?.First();
+            var closestHit = pointsWithDistances?.Skip(1).First();
 
             if(closestHit.HasValue)
             {

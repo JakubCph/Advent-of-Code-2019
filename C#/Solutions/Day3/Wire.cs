@@ -25,6 +25,7 @@ namespace Day3
         {
             char dir;
             int length;
+            Points.Add(_currPos);
             for (int i = 0; i < directions.Length; i++)
             {
                 dir = directions[i].ElementAt(0);
