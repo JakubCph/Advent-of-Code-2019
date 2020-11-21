@@ -17,8 +17,7 @@ namespace Day3
 
             var intersectingPoints = wire1.Points.Intersect(wire2.Points, Point.Comparer).ToList();
 
-            Func<Point, Point, int> manhattanDistanceFormula = (origin, target) => Math.Abs(origin.X - target.X) + Math.Abs(origin.Y - target.Y);
-            var pointsWithDistances = Calculator.Calculate(manhattanDistanceFormula, new Point(0,0) ,intersectingPoints).ToList();
+            var pointsWithDistances = Calculator.CalculateManhattanDistance(new Point(0,0) ,intersectingPoints).ToList();
             pointsWithDistances.Sort(new DistanceComparer());
             var closestHit = pointsWithDistances?.First();
 
