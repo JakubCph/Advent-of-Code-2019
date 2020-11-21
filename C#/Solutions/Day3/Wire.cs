@@ -17,7 +17,7 @@ namespace Day3
 
         public Wire(string[] directions)
         {
-            Points = new HashSet<Point>();
+            Points = new HashSet<Point>(Point.Comparer);
             addPoints(directions);
         }
 
