@@ -13,19 +13,23 @@ namespace Day3
         private const char Down = 'D';
 
         private Point _currPos = new Point(0,0);
-        public HashSet<Point> Points { get; }
-
+        private int _steps = 0;
+        public HashSet<Tuple<Point,int>> Points { get; }
         public Wire(string[] directions)
         {
-            Points = new HashSet<Point>(Point.Comparer);
+            Points = new HashSet<Tuple<Point,int>>(new PointDistanceComparer());
             addPoints(directions);
         }
 
+        public int DistanceAt(Point point)
+        {
+            return Points.Single(t => t.Item1.X == point.X && t.Item1.Y == point.Y).Item2;
+        }
         private void addPoints(string[] directions)
         {
             char dir;
             int length;
-            Points.Add(_currPos);
+            Points.Add(new Tuple<Point,int>(_currPos, _steps));
             for (int i = 0; i < directions.Length; i++)
             {
                 dir = directions[i].ElementAt(0);
@@ -43,29 +47,29 @@ namespace Day3
                 case Up:
                     for (int i = 0; i < length; i++)
                     {
-                        updateCurrPos(0, 1);
-                        Points.Add(_currPos);
+                        updateCurrPosAndSteps(0, 1);
+                        Points.Add(new Tuple<Point,int>(_currPos,_steps));
                     }
                     break;
                 case Down:
                     for (int i = 0; i < length; i++)
                     {
-                        updateCurrPos(0, -1);
-                        Points.Add(_currPos);
+                        updateCurrPosAndSteps(0, -1);
+                        Points.Add(new Tuple<Point, int>(_currPos, _steps));
                     }
                     break;
                 case Left:
                     for (int i = 0; i < length; i++)
                     {
-                        updateCurrPos(-1,0);
-                        Points.Add(_currPos);
+                        updateCurrPosAndSteps(-1,0);
+                        Points.Add(new Tuple<Point, int>(_currPos, _steps));
                     }
                     break;
                 case Right:
                     for (int i = 0; i < length; i++)
                     {
-                        updateCurrPos(1, 0);
-                        Points.Add(_currPos);
+                        updateCurrPosAndSteps(1, 0);
+                        Points.Add(new Tuple<Point, int>(_currPos, _steps));
                     }
                     break;
                 default:
@@ -73,9 +77,10 @@ namespace Day3
             }
         }
 
-        private void updateCurrPos(int dx, int dy)
+        private void updateCurrPosAndSteps(int dx, int dy)
         {
             _currPos = new Point(_currPos.X + dx, _currPos.Y + dy);
+            _steps++;
         }
 
     }
