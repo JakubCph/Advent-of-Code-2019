@@ -18,22 +18,27 @@ namespace Day5
 
         public static int[] Process(int[] opcode)
         {
-            int instructionPointer = 0;
-            while(instructionPointer < opcode.Length && opcode[instructionPointer] != STOP)
+            int instructionCounter = 0;
+            while(instructionCounter < opcode.Length && opcode[instructionCounter] != STOP)
             {
-                switch (opcode[instructionPointer])
+                var parameterModes = new int[2];
+                Tuple<ParameterMode[], int> currentInstruction = decomposeOpCode(opcode[instructionCounter]);
+                switch (currentInstruction.Item2)
                 {
                     case ADD:
-                        execute(AddCmd, opcode, ref instructionPointer);
+                        (AddCmd as AddCommand).Modes = currentInstruction.Item1;
+                        execute(AddCmd, opcode, ref instructionCounter);
                         break;
                     case MULTIPLY:
-                        execute(MultiplyCmd, opcode, ref instructionPointer);
+                        (MultiplyCmd as MultiplyCommand).Modes = currentInstruction.Item1;
+                        execute(MultiplyCmd, opcode, ref instructionCounter);
                         break;
                     case INPUT:
-                        execute(InpCmd, opcode, ref instructionPointer);
+                        execute(InpCmd, opcode, ref instructionCounter);
                         break;
                     case OUTPUT:
-                        execute(OutCmd, opcode, ref instructionPointer);
+                        (OutCmd as OutputCommand).Modes = currentInstruction.Item1;
+                        execute(OutCmd, opcode, ref instructionCounter);
                         break;  
                     default:
                         break;
@@ -42,6 +47,18 @@ namespace Day5
 
             return opcode;
         }
+
+        private static Tuple<ParameterMode[], int> decomposeOpCode(int value)
+        {
+            var valueString = value.ToString("D4");
+            var opcode = int.Parse(valueString.Substring(valueString.Length - 2));
+            var mode1 = (ParameterMode)int.Parse(valueString.Substring(valueString.Length - 3,1));
+            var mode2 = (ParameterMode)int.Parse(valueString.Substring(valueString.Length - 4, 1));
+            var parameterModes = new ParameterMode[] { mode1, mode2 };
+
+            return new Tuple<ParameterMode[], int>(parameterModes, opcode);
+        }
+
         private static void execute(IOpCodeCommand command, int[] opcode, ref int instructionPointer)
         {
             command.Execute(opcode, ref instructionPointer);

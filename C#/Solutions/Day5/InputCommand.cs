@@ -10,8 +10,9 @@ namespace Day5
 
         public void Execute(int[] opcode, ref int instructionPointer)
         {
+            Console.WriteLine("Input: ");
             var value = int.Parse(Console.ReadLine());
-            opcode[instructionPointer + 1] = value;
+            opcode[opcode[instructionPointer + 1]] = value;
 
             instructionPointer += InstructionLength;
         }

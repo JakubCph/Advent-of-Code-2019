@@ -4,22 +4,33 @@ using System.Text;
 
 namespace Day5
 {
-    public class AddCommand : IOpCodeCommand
+    public class AddCommand : IOpCodeCommand, IParameterMode
     {
         public int InstructionLength => 4;
+
+        public ParameterMode[] Modes { get; set; } = null;
 
         /// <summary>
         /// Add operation. Modify opcode in place. Gets numbers from locations pointed by the 
         /// opcode value at locations +1 and +2 from current. Writes result at location pointed by 
         /// opcode value at location +3 from current.
         /// </summary>
-        public void Execute(int[] opcode, ref int current)
+        public void Execute(int[] opcode, ref int instructionCounter)
         {
-            var a = opcode[opcode[current + 1]];
-            var b = opcode[opcode[current + 2]];
-            opcode[opcode[current + 3]] = a + b;
+            if(Modes is null)
+            {
+                return;
+            }
 
-            current += InstructionLength;
+            var a = Modes[0] == ParameterMode.Position ? 
+                                        opcode[opcode[instructionCounter + 1]] :
+                                        opcode[instructionCounter + 1];
+            var b = Modes[1] == ParameterMode.Position ? 
+                                        opcode[opcode[instructionCounter + 2]] :
+                                        opcode[instructionCounter + 2];
+            opcode[opcode[instructionCounter + 3]] = a + b;
+
+            instructionCounter += InstructionLength;
         }
     }
 }
