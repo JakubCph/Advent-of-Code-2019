@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace Day5
 {
@@ -10,19 +9,27 @@ namespace Day5
         private const int MULTIPLY = 2;
         private const int INPUT = 3;
         private const int OUTPUT = 4;
+        private const int JUMP_IF_TRUE = 5;
+        private const int JUMP_IF_FALSE = 6;
+        private const int LESS_THAN = 7;
+        private const int EQUALS = 8;
+
 
         private static readonly IOpCodeCommand MultiplyCmd = new MultiplyCommand();
         private static readonly IOpCodeCommand AddCmd = new AddCommand();
         private static readonly IOpCodeCommand InpCmd = new InputCommand();
         private static readonly IOpCodeCommand OutCmd = new OutputCommand();
+        private static readonly IOpCodeCommand JumpIfTrueCmd = new JumpIfTrueCommand();
+        private static readonly IOpCodeCommand JumpIfFalseCmd = new JumpIfFalseCommand();
+        private static readonly IOpCodeCommand LessThanCmd = new LessThanCommand();
+        private static readonly IOpCodeCommand EqualsCmd = new EqualsCommand();
 
-        public static int[] Process(int[] opcode)
+        public static void Process(int[] opcode)
         {
             int instructionCounter = 0;
             while(instructionCounter < opcode.Length && opcode[instructionCounter] != STOP)
             {
-                var parameterModes = new int[2];
-                Tuple<ParameterMode[], int> currentInstruction = decomposeOpCode(opcode[instructionCounter]);
+                Tuple<ParameterMode[], int> currentInstruction = DecomposeOpCode(opcode[instructionCounter]);
                 switch (currentInstruction.Item2)
                 {
                     case ADD:
@@ -39,16 +46,30 @@ namespace Day5
                     case OUTPUT:
                         (OutCmd as OutputCommand).Modes = currentInstruction.Item1;
                         execute(OutCmd, opcode, ref instructionCounter);
-                        break;  
+                        break;
+                    case JUMP_IF_TRUE:
+                        (JumpIfTrueCmd as JumpIfTrueCommand).Modes = currentInstruction.Item1;
+                        execute(JumpIfTrueCmd, opcode, ref instructionCounter);
+                        break;
+                    case JUMP_IF_FALSE:
+                        (JumpIfFalseCmd as JumpIfFalseCommand).Modes = currentInstruction.Item1;
+                        execute(JumpIfFalseCmd, opcode, ref instructionCounter);
+                        break;
+                    case LESS_THAN:
+                        (LessThanCmd as LessThanCommand).Modes = currentInstruction.Item1;
+                        execute(LessThanCmd, opcode, ref instructionCounter);
+                        break;
+                    case EQUALS:
+                        (EqualsCmd as EqualsCommand).Modes = currentInstruction.Item1;
+                        execute(EqualsCmd, opcode, ref instructionCounter);
+                        break;
                     default:
                         break;
                 }
             }
-
-            return opcode;
         }
 
-        private static Tuple<ParameterMode[], int> decomposeOpCode(int value)
+        public static Tuple<ParameterMode[], int> DecomposeOpCode(int value)
         {
             var valueString = value.ToString("D4");
             var opcode = int.Parse(valueString.Substring(valueString.Length - 2));

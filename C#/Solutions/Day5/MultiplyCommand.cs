@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Day5
+﻿namespace Day5
 {
-    
+
     public class MultiplyCommand : IOpCodeCommand, IParameterMode
     {
         public int InstructionLength => 4;
