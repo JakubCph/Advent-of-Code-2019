@@ -13,27 +13,32 @@ namespace Day6
         public Tree(string root)
         {
             adjacencyList = new List<Node>();
-            Root = new Node(root) { Depth = 0};
-            adjacencyList.Add(Root);
+            Root = CreateNodeIfNotExists(root);
+            ConnectNodes(null,root);
         }
-        public bool CreateNodeIfNotExists(string newNode)
+        public Node CreateNodeIfNotExists(string newNode)
         {
-            if(adjacencyList.Any(n => n.Value == newNode))
+            var node = adjacencyList.Find(n => n.Value == newNode);
+            if(node is null)
             {
-                return false;
+                var createdNode = new Node(newNode);
+                adjacencyList.Add(createdNode);
+                return createdNode;
             }
-            adjacencyList.Add(new Node(newNode));
-            return true;
+            return node;
         }
         /// <summary>
-        /// Directed graph. node2 orbits around node1 therefore only ass to node1's edges.
+        /// Undirected graph. Each node has child nodes and Only one parent node.
         /// </summary>
+        /// <param name="nodeName1">Parent node</param>
+        /// <param name="nodeName2">CHild node</param>
         public void ConnectNodes(string nodeName1, string nodeName2)
         {
             var node1 = adjacencyList.Find(n => n.Value == nodeName1);
             var node2 = adjacencyList.Find(n => n.Value == nodeName2);
 
-            node1.Edges.Add(node2);
+            node1?.Children.Add(node2);
+            node2.Parent = node1;
         }
 
         private Queue<Node> processQueue;
@@ -53,7 +58,7 @@ namespace Day6
             {
                 var current = processQueue.Dequeue();
                 sum += current.Depth;
-                foreach (var node in current.Edges)
+                foreach (var node in current.Children)
                 {
                     node.Depth = current.Depth + 1;
                     processQueue.Enqueue(node);

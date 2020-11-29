@@ -8,12 +8,13 @@ namespace Day6
     {
         public string Value { get;}
         public int Depth { get; set; }
-        public List<Node> Edges { get; set; }
+        public List<Node> Children { get; set; }
+        public Node Parent { get; set; }
         public Node(string name)
         {
             Depth = -1;
             Value = name;
-            Edges = new List<Node>();
+            Children = new List<Node>();
         }
     }
 }
