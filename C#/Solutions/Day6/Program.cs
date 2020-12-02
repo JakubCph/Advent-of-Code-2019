@@ -20,6 +20,8 @@ namespace Day6
             }
 
             Console.WriteLine($"Total orbits: {orbitMap.CalculateTotalOrbits()}.");
+
+            Console.WriteLine($"Minimum orbital transfers: {orbitMap.MinimumOrbitalTransfers("YOU","SAN")}");
         }
     }
 }

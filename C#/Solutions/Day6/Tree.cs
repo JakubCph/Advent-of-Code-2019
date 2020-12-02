@@ -66,5 +66,39 @@ namespace Day6
             }
             return sum;
         }
+
+        /// <summary>
+        /// Calculate minimum number of orbital transfers given two objects.
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public int MinimumOrbitalTransfers(string start, string target)
+        {
+            var startNode = CreateNodeIfNotExists(start);
+            var targetNode = CreateNodeIfNotExists(target);
+            Node parent = findCommonParent(startNode, targetNode);
+            var diff = startNode.Parent.Depth - parent.Depth;
+            var diff2 = targetNode.Parent.Depth - parent.Depth;
+
+            return diff + diff2;
+        }
+
+        /// <summary>
+        /// Finds the common Node for two given Nodes
+        /// </summary>
+        /// <returns></returns>
+        private Node findCommonParent(Node startNode, Node targetNode)
+        {
+            // base case
+            if (object.ReferenceEquals(startNode,targetNode))
+                return startNode;
+
+            // recursivelly find the parent by orbit transfer for the object with higher Depth in Tree
+            return startNode.Depth > targetNode.Depth ?
+                findCommonParent(startNode.Parent, targetNode) :
+                findCommonParent(startNode, targetNode.Parent);
+
+        }
     }
 }
