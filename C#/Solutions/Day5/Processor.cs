@@ -5,12 +5,14 @@ namespace Day5
 {
     public class Processor
     {
+        private static readonly Queue<int> inputQueue = new Queue<int>();
+        private static readonly Queue<int> outputQueue = new Queue<int>();
         private static Dictionary<int, IOpCode> strategies = new Dictionary<int, IOpCode>() 
             {
                 {ADD, new AddStrategy() },
                 {MULTIPLY, new MultiplyStrategy()},
-                {INPUT, new InputStrategy() },
-                {OUTPUT, new OutputStrategy() },
+                {INPUT, new InputStrategy(inputQueue) },
+                {OUTPUT, new OutputStrategy(outputQueue) },
                 {JUMP_IF_TRUE, new JumpIfTrueStrategy() },
                 {JUMP_IF_FALSE, new JumpIfFalseStrategy() },
                 {LESS_THAN, new LessThanStrategy() },
@@ -31,6 +33,8 @@ namespace Day5
         {
             var context = new Context();
             int instructionCounter = 0;
+            Console.Write("Input: ");
+            inputQueue.Enqueue(int.Parse(Console.ReadLine()));
             while(instructionCounter < opcode.Length && opcode[instructionCounter] != STOP)
             {
                 var currentInstruction = DecomposeOpCode(opcode[instructionCounter]);
@@ -65,6 +69,11 @@ namespace Day5
                 }
 
                 context.executeStrategy(opcode, ref instructionCounter, currentInstruction.Item1);
+            }
+
+            foreach (var item in outputQueue)
+            {
+                Console.WriteLine($"Output: {item}");
             }
         }
 
