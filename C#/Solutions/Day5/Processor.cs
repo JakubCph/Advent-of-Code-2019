@@ -29,12 +29,16 @@ namespace Day5
         private const int LESS_THAN = 7;
         private const int EQUALS = 8;
 
-        public static void Process(int[] opcode)
+        public static int Process(int[] opcode, params int[] inputs)
         {
             var context = new Context();
             int instructionCounter = 0;
-            Console.Write("Input: ");
-            inputQueue.Enqueue(int.Parse(Console.ReadLine()));
+            for (int i = 0; i < inputs.Length; i++)
+            {
+                int item = inputs[i];
+                inputQueue.Enqueue(item);
+            }
+
             while(instructionCounter < opcode.Length && opcode[instructionCounter] != STOP)
             {
                 var currentInstruction = DecomposeOpCode(opcode[instructionCounter]);
@@ -71,10 +75,13 @@ namespace Day5
                 context.executeStrategy(opcode, ref instructionCounter, currentInstruction.Item1);
             }
 
-            foreach (var item in outputQueue)
+            int last = 0;
+            while(outputQueue.Count > 0)
             {
-                Console.WriteLine($"Output: {item}");
+                last = outputQueue.Dequeue();
+                Console.WriteLine($"Output: {last}");
             }
+            return last;
         }
 
         public static Tuple<(ParameterMode, ParameterMode), int> DecomposeOpCode(int value)

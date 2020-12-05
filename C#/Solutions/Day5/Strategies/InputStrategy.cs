@@ -16,7 +16,6 @@ namespace Day5
         }
         public void Execute(int[] opcode, ref int instructionPointer, (ParameterMode, ParameterMode) modes)
         {
-            Console.WriteLine("Input: ");
             var value = queue.Dequeue();
             opcode[opcode[instructionPointer + 1]] = value;
 
