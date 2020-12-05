@@ -4,11 +4,11 @@ using System.Text;
 
 namespace Day5
 {
-    public class InputCommand : IOpCodeCommand
+    public class InputStrategy : IOpCode
     {
         public int InstructionLength => 2;
 
-        public void Execute(int[] opcode, ref int instructionPointer)
+        public void Execute(int[] opcode, ref int instructionPointer, (ParameterMode, ParameterMode) modes)
         {
             Console.WriteLine("Input: ");
             var value = int.Parse(Console.ReadLine());

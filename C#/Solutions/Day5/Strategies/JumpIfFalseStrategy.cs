@@ -1,10 +1,10 @@
 ﻿namespace Day5
 {
-    public class JumpIfFalseCommand : ThreeInstructionCommand
+    public class JumpIfFalseStrategy : ThreeInstructionStrategy
     {
-        public override void Execute(int[] opcode, ref int instructionPointer)
+        public override void Execute(int[] opcode, ref int instructionPointer, (ParameterMode, ParameterMode) modes)
         {
-            base.Execute(opcode, ref instructionPointer);
+            base.Execute(opcode, ref instructionPointer, modes);
 
             System.Console.Write($"Jump-if-false: {firstParam} == 0({firstParam == 0}), Pointer at {instructionPointer}. "); 
             if(firstParam == 0)

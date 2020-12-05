@@ -68,11 +68,8 @@ namespace Day6
         }
 
         /// <summary>
-        /// Calculate minimum number of orbital transfers given two objects.
+        /// Calculate minimum number of orbital transfers given two objects, exclusive the object.
         /// </summary>
-        /// <param name="start"></param>
-        /// <param name="target"></param>
-        /// <returns></returns>
         public int MinimumOrbitalTransfers(string start, string target)
         {
             var startNode = CreateNodeIfNotExists(start);
@@ -85,9 +82,8 @@ namespace Day6
         }
 
         /// <summary>
-        /// Finds the common Node for two given Nodes
+        /// Finds the common Node for two given Nodes.
         /// </summary>
-        /// <returns></returns>
         private Node findCommonParent(Node startNode, Node targetNode)
         {
             // base case

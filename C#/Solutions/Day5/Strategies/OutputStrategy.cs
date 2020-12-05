@@ -4,19 +4,13 @@ using System.Text;
 
 namespace Day5
 {
-    public class OutputCommand : IOpCodeCommand
+    public class OutputStrategy : IOpCode
     {
         public int InstructionLength => 2;
-        public ParameterMode[] Modes { get; set; } = null;
-
-        public void Execute(int[] opcode, ref int instructionCounter)
+       
+        public void Execute(int[] opcode, ref int instructionCounter, (ParameterMode, ParameterMode) modes)
         {
-            if (Modes is null)
-            {
-                return;
-            }
-
-            if(Modes[0] == ParameterMode.Position)
+            if(modes.Item1 == ParameterMode.Position)
             {
                 var address = opcode[instructionCounter + 1];
                 Console.WriteLine(opcode[address]);
